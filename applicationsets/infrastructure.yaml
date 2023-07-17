@@ -12,7 +12,13 @@ spec:
               directories:
                 - path: "core/*"
                 - path: "monitoring/*"
-          - clusters: {}
+          - clusters:
+              selector:
+                matchLabels:
+                  kubernetes.bc4.uk/environment: "production"
+              values:
+                environment: production
+
   template:
     metadata:
       name: "{{ path.basenameNormalized }}-{{ nameNormalized }}"
@@ -24,7 +30,7 @@ spec:
         path: "{{ path }}"
         helm:
           valueFiles:
-            - "values.{{ index .metadata.labels kubernetes.bc4.uk/environment }}.yaml"
+            - "values.{{ values.environment }}.yaml"
       destination:
         name: "{{ name }}"
         namespace: infrastructure
