@@ -29,7 +29,7 @@ spec:
         targetRevision: HEAD
         path: "{{ path }}"
         helm:
-          releaseName: "{{ path.basenameNormalized }} }}"
+          releaseName: "{{ path.basenameNormalized }}"
           valueFiles:
             - "values.{{ values.environment }}.yaml"
       destination:
