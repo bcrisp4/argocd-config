@@ -1,0 +1,14 @@
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/bcrisp4/argocd-config.git
+    targetRevision: HEAD
+  destination:
+    namespace: argocd
+    name: in-cluster
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

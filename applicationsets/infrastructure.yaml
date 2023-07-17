@@ -1,0 +1,36 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: infrastructure
+spec:
+  generators:
+    - matrix:
+        generators:
+          - git:
+              repoURL: https://github.com/bcrisp4/kubernetes-infrastructure.git
+              revision: HEAD
+              directories:
+                - path: "core/*"
+                - path: "monitoring/*"
+          - clusters: {}
+  template:
+    metadata:
+      name: "{{ path.basenameNormalized }}-{{ nameNormalized }}"
+    spec:
+      project: infrastructure
+      source:
+        repoURL: https://github.com/bcrisp4/kubernetes-infrastructure.git
+        targetRevision: HEAD
+        path: "{{ path }}"
+        helm:
+          valueFiles:
+            - values.{{ index .metadata.labels kubernetes.bc4.uk/environment }}.yaml
+      destination:
+        name: "{{ name }}"
+        namespace: infrastructure
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true

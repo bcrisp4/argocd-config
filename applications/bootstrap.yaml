@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argocd-bootstrap
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    path: bootstrap
+    repoURL: https://github.com/bcrisp4/argocd-config.git
+    targetRevision: HEAD
+  destination:
+    namespace: argocd
+    name: in-cluster
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
