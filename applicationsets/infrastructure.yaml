@@ -24,7 +24,7 @@ spec:
         path: "{{ path }}"
         helm:
           valueFiles:
-            - values.{{ index .metadata.labels kubernetes.bc4.uk/environment }}.yaml
+            - "values.{{ index .metadata.labels kubernetes.bc4.uk/environment }}.yaml"
       destination:
         name: "{{ name }}"
         namespace: infrastructure
