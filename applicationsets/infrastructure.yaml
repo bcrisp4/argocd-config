@@ -29,11 +29,12 @@ spec:
         targetRevision: HEAD
         path: "{{ path }}"
         helm:
+          releaseName: "{{ path.basenameNormalized }} }}"
           valueFiles:
             - "values.{{ values.environment }}.yaml"
       destination:
         name: "{{ name }}"
-        namespace: infrastructure
+        namespace: infrastructure-{{ path.basenameNormalized }}
       syncPolicy:
         automated:
           prune: true
