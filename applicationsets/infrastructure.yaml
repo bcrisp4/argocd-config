@@ -34,7 +34,7 @@ spec:
             - "values.{{ values.environment }}.yaml"
       destination:
         name: "{{ name }}"
-        namespace: infrastructure-{{ path.basenameNormalized }}
+        namespace: infrastructure
       syncPolicy:
         automated:
           prune: true
