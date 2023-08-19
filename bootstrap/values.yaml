@@ -5,7 +5,7 @@ spec:
     targetRevision: HEAD
   destination:
     namespace: argocd
-    name: in-cluster
+    name: do-lon1-1
   syncPolicy:
     automated:
       prune: true
