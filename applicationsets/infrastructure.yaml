@@ -11,10 +11,10 @@ spec:
               repoURL: https://github.com/bcrisp4/kubernetes-infrastructure.git
               revision: HEAD
               directories:
-                - path: "{{ name }}/*"
+                - path: "{{ name }}/*/*"
   template:
     metadata:
-      name: "{{ path.basenameNormalized }}.infrastructure.{{ nameNormalized }}"
+      name: "{{ path.basenameNormalized }}.infra-{{ index .path.segments 1 }}.{{ nameNormalized }}"
     spec:
       project: infrastructure
       source:
@@ -27,7 +27,7 @@ spec:
             - "values.yaml"
       destination:
         name: "{{ name }}"
-        namespace: infrastructure
+        namespace: infra-{{ index .path.segments 1 }}
       syncPolicy:
         automated:
           prune: true

@@ -11,7 +11,7 @@ spec:
   sourceRepos:
     - "https://github.com/bcrisp4/kubernetes-infrastructure.git"
   destinations:
-    - namespace: infrastructure
+    - namespace: infra-*
       server: "*"
       name: "*"
   clusterResourceWhitelist:
