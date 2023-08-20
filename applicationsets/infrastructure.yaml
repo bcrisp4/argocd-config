@@ -6,12 +6,12 @@ spec:
   generators:
     - matrix:
         generators:
+          - clusters: {}
           - git:
               repoURL: https://github.com/bcrisp4/kubernetes-infrastructure.git
               revision: HEAD
               directories:
                 - path: "{{ name }}/*"
-          - clusters: {}
   template:
     metadata:
       name: "{{ path.basenameNormalized }}.{{ nameNormalized }}"
