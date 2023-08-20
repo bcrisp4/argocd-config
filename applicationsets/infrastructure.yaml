@@ -14,7 +14,7 @@ spec:
                 - path: "{{ name }}/*/*"
   template:
     metadata:
-      name: "{{ path.basenameNormalized }}.infra-{{ index .path.segments 1 }}.{{ nameNormalized }}"
+      name: "{{ path.basenameNormalized }}.infra-{{ path[1] }}.{{ nameNormalized }}"
     spec:
       project: infrastructure
       source:
