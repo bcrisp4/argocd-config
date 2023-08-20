@@ -14,7 +14,7 @@ spec:
                 - path: "{{ name }}/*"
   template:
     metadata:
-      name: "{{ path.basenameNormalized }}.{{ nameNormalized }}"
+      name: "{{ path.basenameNormalized }}.infrastructure.{{ nameNormalized }}"
     spec:
       project: infrastructure
       source:
