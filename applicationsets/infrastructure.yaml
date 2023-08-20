@@ -27,7 +27,7 @@ spec:
             - "values.yaml"
       destination:
         name: "{{ name }}"
-        namespace: infra-{{ index .path.segments 1 }}
+        namespace: infra-{{ path[1] }}
       syncPolicy:
         automated:
           prune: true
