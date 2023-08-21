@@ -7,3 +7,19 @@ metadata:
     app.kubernetes.io/part-of: argocd
   name: argocd-notifications-cm
   namespace: argocd
+data:
+  service.github: |
+    appID: 378490
+    installationID: 40919749
+    privateKey: $github-privateKey
+  trigger.on-sync-status-deployed: |
+    - when: app.status.sync.status == 'Deployed'
+      send: [app-deployed]
+  template.app-deployed: |
+    message: |
+      Application "{{.app.metadata.name}}" has been deployed.
+    github:
+      status:
+        state: success
+        label: "continuous-delivery/{{.app.metadata.name}}"
+        targetURL: "{{.context.argocdUrl}}/applications/{{.app.metadata.name}}?operation=true"
