@@ -17,9 +17,15 @@ data:
       send: [app-deployed]
   template.app-deployed: |
     message: |
-      Application "{{.app.metadata.name}}" has been deployed.
+      Application {{.app.metadata.name}} has been deployed.
     github:
+      repoURLPath: "{{.app.spec.source.repoURL}}"
+      revisionPath: "{{.app.status.operationState.syncResult.revision}}"
       status:
         state: success
-        label: "continuous-delivery/{{.app.metadata.name}}"
+        label: "cd/{{.app.metadata.name}}"
         targetURL: "{{.context.argocdUrl}}/applications/{{.app.metadata.name}}?operation=true"
+      deployment:
+        state: success
+        logURL: "{{.context.argocdUrl}}/applications/{{.app.metadata.name}}?operation=true"
+        requiredContexts: []
