@@ -16,7 +16,7 @@ spec:
     metadata:
       name: "{{ path.basenameNormalized }}.infra-{{ path[1] }}.{{ nameNormalized }}"
       annotations:
-        notifications.argoproj.io/subscribe.on-sync-status-deployed.github: ""
+        notifications.argoproj.io/subscribe.app-sync.github: ""
     spec:
       project: infrastructure
       source:
