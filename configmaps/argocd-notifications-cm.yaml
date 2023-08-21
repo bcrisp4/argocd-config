@@ -8,6 +8,8 @@ metadata:
   name: argocd-notifications-cm
   namespace: argocd
 data:
+  context: |
+    argocdUrl: https://argocd.bc4.uk
   service.github: |
     appID: 378490
     installationID: 40919749
@@ -25,9 +27,9 @@ data:
       status:
         state: success
         label: "cd/{{.app.metadata.name}}"
-        targetURL: "https://{{.context.argocdUrl}}/applications/{{.app.metadata.name}}?operation=true"
+        targetURL: "{{.context.argocdUrl}}/applications/{{.app.metadata.name}}?operation=true"
       deployment:
         state: success
-        environmentURL: "https://{{.context.argocdUrl}}/applications/{{.app.metadata.name}}?operation=true"
-        logURL: "https://{{.context.argocdUrl}}/applications/{{.app.metadata.name}}?operation=true"
+        environmentURL: "{{.context.argocdUrl}}/applications/{{.app.metadata.name}}?operation=true"
+        logURL: "{{.context.argocdUrl}}/applications/{{.app.metadata.name}}?operation=true"
         requiredContexts: []
