@@ -25,8 +25,8 @@ data:
       status:
         state: success
         label: "cd/{{.app.metadata.name}}"
-        targetURL: "{{.context.argocdUrl}}/applications/{{.app.metadata.name}}?operation=true"
+        targetURL: "https://{{.context.argocdUrl}}/applications/{{.app.metadata.name}}?operation=true"
       deployment:
         state: success
-        logURL: "{{.context.argocdUrl}}/applications/{{.app.metadata.name}}?operation=true"
+        logURL: "https://{{.context.argocdUrl}}/applications/{{.app.metadata.name}}?operation=true"
         requiredContexts: []
