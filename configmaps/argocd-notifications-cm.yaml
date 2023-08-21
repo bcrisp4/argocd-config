@@ -18,7 +18,7 @@ data:
       send: [app-sync-succeeded]
   template.app-sync-succeeded: |
     message: |
-      Application {{.app.metadata.name}} has been synchronised.
+      {{.app.metadata.name}} sync succeeded.
     github:
       repoURLPath: "{{.app.spec.source.repoURL}}"
       revisionPath: "{{.app.status.operationState.syncResult.revision}}"
@@ -28,5 +28,6 @@ data:
         targetURL: "https://{{.context.argocdUrl}}/applications/{{.app.metadata.name}}?operation=true"
       deployment:
         state: success
+        environmentURL: "https://{{.context.argocdUrl}}/applications/{{.app.metadata.name}}?operation=true"
         logURL: "https://{{.context.argocdUrl}}/applications/{{.app.metadata.name}}?operation=true"
         requiredContexts: []
