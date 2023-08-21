@@ -15,10 +15,31 @@ data:
     installationID: 40919749
     privateKey: $github-privateKey
   trigger.app-sync: |
+    - when: app.status.operationState.phase in ['Running']
+      description: Application is being synced
+      send: [app-sync-running]
     - when: app.status.operationState.phase in ['Succeeded'] and app.status.health.status == 'Healthy'
       description: Application is synced and healthy. Triggered once per commit.
       send: [app-sync-succeeded]
       oncePer: app.status.operationState.syncResult.revision
+    - when: app.status.operationState.phase in ['Error', 'Failed']
+      description: Application syncing has failed
+      send: [app-sync-failed]
+  template.app-sync-running: |
+    message: |
+      {{.app.metadata.name}} sync in progress.
+    github:
+      repoURLPath: "{{.app.spec.source.repoURL}}"
+      revisionPath: "{{.app.status.operationState.syncResult.revision}}"
+      status:
+        state: pending
+        label: "cd/{{.app.metadata.name}}"
+        targetURL: "{{.context.argocdUrl}}/applications/{{.app.metadata.name}}?operation=true"
+      deployment:
+        state: pending
+        environmentURL: "{{.context.argocdUrl}}/applications/{{.app.metadata.name}}?operation=true"
+        logURL: "{{.context.argocdUrl}}/applications/{{.app.metadata.name}}?operation=true"
+        requiredContexts: []
   template.app-sync-succeeded: |
     message: |
       {{.app.metadata.name}} sync succeeded.
@@ -31,6 +52,21 @@ data:
         targetURL: "{{.context.argocdUrl}}/applications/{{.app.metadata.name}}?operation=true"
       deployment:
         state: success
+        environmentURL: "{{.context.argocdUrl}}/applications/{{.app.metadata.name}}?operation=true"
+        logURL: "{{.context.argocdUrl}}/applications/{{.app.metadata.name}}?operation=true"
+        requiredContexts: []
+  template.app-sync-failed: |
+    message: |
+      {{.app.metadata.name}} sync failed.
+    github:
+      repoURLPath: "{{.app.spec.source.repoURL}}"
+      revisionPath: "{{.app.status.operationState.syncResult.revision}}"
+      status:
+        state: failure
+        label: "cd/{{.app.metadata.name}}"
+        targetURL: "{{.context.argocdUrl}}/applications/{{.app.metadata.name}}?operation=true"
+      deployment:
+        state: failure
         environmentURL: "{{.context.argocdUrl}}/applications/{{.app.metadata.name}}?operation=true"
         logURL: "{{.context.argocdUrl}}/applications/{{.app.metadata.name}}?operation=true"
         requiredContexts: []
