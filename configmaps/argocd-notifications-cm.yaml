@@ -12,12 +12,14 @@ data:
     appID: 378490
     installationID: 40919749
     privateKey: $github-privateKey
-  trigger.on-sync-status-deployed: |
-    - when: app.status.sync.status == 'Deployed'
-      send: [app-deployed]
-  template.app-deployed: |
+  trigger.app-sync: |
+    - when: app.status.operationState.phase in ['Succeeded'] and app.status.health.status == 'Healthy'
+      description: Application is synced and healthy. Triggered once per commit.
+      send: [app-sync-succeeded]
+      oncePer: app.status.operationState.syncResult.revision
+  template.app-sync-succeeded: |
     message: |
-      Application {{.app.metadata.name}} has been deployed.
+      Application {{.app.metadata.name}} has been synchronised.
     github:
       repoURLPath: "{{.app.spec.source.repoURL}}"
       revisionPath: "{{.app.status.operationState.syncResult.revision}}"
