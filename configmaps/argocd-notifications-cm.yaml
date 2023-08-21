@@ -32,7 +32,7 @@ data:
       send: [app-sync-status-unknown]
   template.app-sync-running: |
     message: |
-      {{.app.metadata.name}} sync in progress.
+      Sync in progress
     github:
       repoURLPath: "{{.app.spec.source.repoURL}}"
       revisionPath: "{{.app.status.operationState.syncResult.revision}}"
@@ -47,7 +47,7 @@ data:
         requiredContexts: []
   template.app-sync-succeeded: |
     message: |
-      {{.app.metadata.name}} sync succeeded.
+      Sync succeeded
     github:
       repoURLPath: "{{.app.spec.source.repoURL}}"
       revisionPath: "{{.app.status.operationState.syncResult.revision}}"
@@ -62,7 +62,7 @@ data:
         requiredContexts: []
   template.app-sync-failed: |
     message: |
-      {{.app.metadata.name}} sync failed.
+      Sync failed
     github:
       repoURLPath: "{{.app.spec.source.repoURL}}"
       revisionPath: "{{.app.status.operationState.syncResult.revision}}"
@@ -77,7 +77,7 @@ data:
         requiredContexts: []
   template.app-health-degraded: |
     message: |
-      {{.app.metadata.name}} health is degraded.
+      Health degraded
     github:
       repoURLPath: "{{.app.spec.source.repoURL}}"
       revisionPath: "{{.app.status.operationState.syncResult.revision}}"
@@ -92,7 +92,7 @@ data:
         requiredContexts: []
   template.app-sync-status-unknown: |
     message: |
-      {{.app.metadata.name}} sync status is unknown.
+      Sync status unknown
     github:
       repoURLPath: "{{.app.spec.source.repoURL}}"
       revisionPath: "{{.app.status.operationState.syncResult.revision}}"
