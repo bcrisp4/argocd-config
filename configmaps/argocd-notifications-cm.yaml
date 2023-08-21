@@ -21,10 +21,15 @@ data:
     - when: app.status.operationState.phase in ['Succeeded'] and app.status.health.status == 'Healthy'
       description: Application is synced and healthy. Triggered once per commit.
       send: [app-sync-succeeded]
-      oncePer: app.status.operationState.syncResult.revision
     - when: app.status.operationState.phase in ['Error', 'Failed']
       description: Application syncing has failed
       send: [app-sync-failed]
+    - when: app.status.health.status == 'Degraded'
+      description: Application has degraded
+      send: [app-health-degraded]
+    - when: app.status.sync.status == 'Unknown'
+      description: Application status is 'Unknown'
+      send: [app-sync-status-unknown]
   template.app-sync-running: |
     message: |
       {{.app.metadata.name}} sync in progress.
@@ -33,7 +38,7 @@ data:
       revisionPath: "{{.app.status.operationState.syncResult.revision}}"
       status:
         state: pending
-        label: "cd/{{.app.metadata.name}}"
+        label: "{{.app.metadata.name}}"
         targetURL: "{{.context.argocdUrl}}/applications/{{.app.metadata.name}}?operation=true"
       deployment:
         state: pending
@@ -48,7 +53,7 @@ data:
       revisionPath: "{{.app.status.operationState.syncResult.revision}}"
       status:
         state: success
-        label: "cd/{{.app.metadata.name}}"
+        label: "{{.app.metadata.name}}"
         targetURL: "{{.context.argocdUrl}}/applications/{{.app.metadata.name}}?operation=true"
       deployment:
         state: success
@@ -63,10 +68,40 @@ data:
       revisionPath: "{{.app.status.operationState.syncResult.revision}}"
       status:
         state: failure
-        label: "cd/{{.app.metadata.name}}"
+        label: "{{.app.metadata.name}}"
         targetURL: "{{.context.argocdUrl}}/applications/{{.app.metadata.name}}?operation=true"
       deployment:
         state: failure
+        environmentURL: "{{.context.argocdUrl}}/applications/{{.app.metadata.name}}?operation=true"
+        logURL: "{{.context.argocdUrl}}/applications/{{.app.metadata.name}}?operation=true"
+        requiredContexts: []
+  template.app-health-degraded: |
+    message: |
+      {{.app.metadata.name}} health is degraded.
+    github:
+      repoURLPath: "{{.app.spec.source.repoURL}}"
+      revisionPath: "{{.app.status.operationState.syncResult.revision}}"
+      status:
+        state: error
+        label: "{{.app.metadata.name}}"
+        targetURL: "{{.context.argocdUrl}}/applications/{{.app.metadata.name}}?operation=true"
+      deployment:
+        state: error
+        environmentURL: "{{.context.argocdUrl}}/applications/{{.app.metadata.name}}?operation=true"
+        logURL: "{{.context.argocdUrl}}/applications/{{.app.metadata.name}}?operation=true"
+        requiredContexts: []
+  template.app-sync-status-unknown: |
+    message: |
+      {{.app.metadata.name}} sync status is unknown.
+    github:
+      repoURLPath: "{{.app.spec.source.repoURL}}"
+      revisionPath: "{{.app.status.operationState.syncResult.revision}}"
+      status:
+        state: error
+        label: "{{.app.metadata.name}}"
+        targetURL: "{{.context.argocdUrl}}/applications/{{.app.metadata.name}}?operation=true"
+      deployment:
+        state: error
         environmentURL: "{{.context.argocdUrl}}/applications/{{.app.metadata.name}}?operation=true"
         logURL: "{{.context.argocdUrl}}/applications/{{.app.metadata.name}}?operation=true"
         requiredContexts: []
