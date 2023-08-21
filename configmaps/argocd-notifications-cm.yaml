@@ -16,7 +16,6 @@ data:
     - when: app.status.operationState.phase in ['Succeeded'] and app.status.health.status == 'Healthy'
       description: Application is synced and healthy. Triggered once per commit.
       send: [app-sync-succeeded]
-      oncePer: app.status.operationState.syncResult.revision
   template.app-sync-succeeded: |
     message: |
       Application {{.app.metadata.name}} has been synchronised.
