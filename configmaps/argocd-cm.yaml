@@ -4,6 +4,13 @@ data:
   accounts.ben.enabled: "true"
   admin.enabled: "false"
   applicationsetcontroller.enable.new.git.file.globbing: "true"
+  resource.exclusions: |
+    - apiGroups:
+        - "*"
+      kinds:
+        - "CiliumEndpoint"
+      clusters:
+        - "*"
 kind: ConfigMap
 metadata:
   labels:
