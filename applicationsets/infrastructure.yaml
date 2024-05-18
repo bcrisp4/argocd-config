@@ -4,14 +4,14 @@ metadata:
   name: infrastructure
 spec:
   generators:
-    - matrix:
-        generators:
-          - clusters: {}
-          - git:
-              repoURL: https://github.com/bcrisp4/kubernetes-infrastructure.git
-              revision: HEAD
-              directories:
-                - path: "{{ name }}/*/*"
+  - matrix:
+      generators:
+      - clusters: {}
+      - git:
+          repoURL: https://github.com/bcrisp4/kubernetes-infrastructure.git
+          revision: HEAD
+          directories:
+          - path: "{{ name }}/*/*"
   template:
     metadata:
       name: "{{ path.basenameNormalized }}.infra-{{ path[1] }}.{{ nameNormalized }}"
@@ -26,7 +26,7 @@ spec:
         helm:
           releaseName: "{{ path.basenameNormalized }}"
           valueFiles:
-            - "values.yaml"
+          - "values.yaml"
       destination:
         name: "{{ name }}"
         namespace: infra-{{ path[1] }}
@@ -35,4 +35,5 @@ spec:
           prune: true
           selfHeal: true
         syncOptions:
-          - CreateNamespace=true
+        - CreateNamespace=true
+        - ServerSideApply=true
