@@ -9,6 +9,7 @@ data:
         - "*"
       kinds:
         - "CiliumEndpoint"
+        - "CiliumIdentity"
       clusters:
         - "*"
 kind: ConfigMap
