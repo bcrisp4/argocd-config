@@ -12,31 +12,13 @@ data:
       - '.spec.endpoints[]?.relabelings[]?.action'
   resource.exclusions: |
     - apiGroups:
-      - ""
+      - "*"
       kinds:
       - "Endpoints"
-      clusters:
-      - "*"
-
-    - apiGroups:
-      - "apps"
-      kinds:
       - "ControllerRevision"
-      clusters:
-      - "*"
-
-    - apiGroups:
-      - "discovery.k8s.io"
-      kinds:
-      - "EndpointSlice"
-      clusters:
-      - "*"
-
-    - apiGroups:
-      - "cilium.io"
-      kinds:
       - "CiliumEndpoint"
       - "CiliumIdentity"
+      - "EndpointSlice"
       clusters:
       - "*"
 kind: ConfigMap
