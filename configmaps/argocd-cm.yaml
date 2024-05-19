@@ -7,6 +7,9 @@ data:
   resource.customizations.ignoreDifferences.apps_StatefulSet: |
     jqPathExpressions:
       - '.spec.volumeClaimTemplates[]?'
+  resource.customizations.ignoreDifferences.monitoring.coreos.com_ServiceMonitor: |
+    jqPathExpressions:
+      - '.spec.endpoints[]?.relabelings[]?.action'
   resource.exclusions: |
     - apiGroups:
         - "*"
