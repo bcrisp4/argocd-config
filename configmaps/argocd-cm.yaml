@@ -4,6 +4,9 @@ data:
   accounts.ben.enabled: "true"
   admin.enabled: "false"
   applicationsetcontroller.enable.new.git.file.globbing: "true"
+  resource.customizations.ignoreDifferences.apps_StatefulSet: |
+    jqPathExpressions:
+      - '.spec.volumeClaimTemplates[]?'
   resource.exclusions: |
     - apiGroups:
         - "*"
