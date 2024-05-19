@@ -14,7 +14,7 @@ data:
     - apiGroups:
         - "core"
       kinds:
-        - "Endpoint"
+        - "Endpoints"
       clusters:
         - "*"
     - apiGroups:
@@ -24,7 +24,7 @@ data:
       clusters:
         - "*"
     - apiGroups:
-        - "discovery.k8s.io"
+        - "discovery.k8s.io/*"
       kinds:
         - "EndpointSlice"
       clusters:
