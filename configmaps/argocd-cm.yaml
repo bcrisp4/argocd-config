@@ -12,7 +12,7 @@ data:
       - '.spec.endpoints[]?.relabelings[]?.action'
   resource.exclusions: |
     - apiGroups:
-        - "core"
+        - "*"
       kinds:
         - "Endpoints"
       clusters:
