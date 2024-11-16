@@ -2,14 +2,8 @@ apiVersion: v1
 data:
   accounts.ben: apiKey,login
   accounts.ben.enabled: "true"
-  admin.enabled: "false"
+  admin.enabled: "true"
   applicationsetcontroller.enable.new.git.file.globbing: "true"
-  resource.customizations.ignoreDifferences.apps_StatefulSet: |
-    jqPathExpressions:
-      - '.spec.volumeClaimTemplates[]?'
-  resource.customizations.ignoreDifferences.monitoring.coreos.com_ServiceMonitor: |
-    jqPathExpressions:
-      - '.spec.endpoints[]?.relabelings[]?.action'
   resource.exclusions: |
     - apiGroups:
       - "*"
