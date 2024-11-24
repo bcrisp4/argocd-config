@@ -5,7 +5,7 @@ metadata:
   namespace: argocd
 spec:
   goTemplate: true
-  goTemplateOptions: ["missingkey=error"]
+  goTemplateOptions: [ "missingkey=error" ]
   generators:
   - git:
       repoURL: https://github.com/bcrisp4/kubernetes-config.git
@@ -36,6 +36,7 @@ spec:
             bc4.uk/project: addons
             bc4.uk/environment: prod
             bc4.uk/cluster: do-nyc3-prod-1
+            goldilocks.fairwinds.com/enabled: 'true'
         automated:
           prune: true
           selfHeal: true
