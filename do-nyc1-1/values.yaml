@@ -48,10 +48,10 @@ argo-cd:
     replicas: 1
     resources:
       requests:
-        cpu: 50m
-        memory: 150M
+        cpu: 100m
+        memory: 250M
       limits:
-        memory: 150M
+        memory: 250M
     ingress:
       enabled: true
       ingressClassName: tailscale
@@ -65,10 +65,10 @@ argo-cd:
     replicas: 1
     resources:
       requests:
-        cpu: 50m
-        memory: 150M
+        cpu: 100m
+        memory: 500M
       limits:
-        memory: 150M
+        memory: 500M
 
   applicationSet:
     replicas: 1
