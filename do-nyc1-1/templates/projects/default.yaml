@@ -2,12 +2,12 @@
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: addons
+  name: default
   namespace: {{ .Release.Namespace }}
   finalizers:
   - resources-finalizer.argocd.argoproj.io
 spec:
-  description: Cluster addons
+  description: Default project
   sourceRepos:
   - "https://github.com/bcrisp4/kubernetes-config.git"
   destinations:

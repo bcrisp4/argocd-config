@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: addons
+  name: kubernetes-config-repo
   namespace: {{ .Release.Namespace }}
 spec:
   goTemplate: true
@@ -12,12 +12,12 @@ spec:
       repoURL: https://github.com/bcrisp4/kubernetes-config.git
       revision: HEAD
       directories:
-      - path: {{ .Values.cluster.name }}/addons/*
+      - path: {{ .Values.cluster.name }}/*
   template:
     metadata:
       name: '{{"{{"}} normalize (index .path.segments 2) {{"}}"}}'
     spec:
-      project: addons
+      project: default
       source:
         repoURL: https://github.com/bcrisp4/kubernetes-config.git
         targetRevision: HEAD
@@ -34,7 +34,7 @@ spec:
           labels:
             bc4.uk/app: '{{"{{"}} normalize (index .path.segments 2) {{"}}"}}'
             bc4.uk/instance: '{{"{{"}} normalize (index .path.segments 2) {{"}}"}}'
-            bc4.uk/project: addons
+            bc4.uk/project: default
             name: {{ .Values.cluster.name }}
             goldilocks.fairwinds.com/enabled: 'true'
         automated:
