@@ -52,14 +52,14 @@ argo-cd:
         memory: 100M
       limits:
         memory: 100M
-      ingress:
-        enabled: true
-        ingressClassName: tailscale
-        hostname: argocd
-        extraTls:
-          - hosts:
-              - argocd
-            secretName: argocd-tls
+    ingress:
+      enabled: true
+      ingressClassName: tailscale
+      hostname: argocd
+      extraTls:
+        - hosts:
+            - argocd
+          secretName: argocd-tls
 
   repoServer:
     replicas: 1
