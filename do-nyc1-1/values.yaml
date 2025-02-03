@@ -28,10 +28,10 @@ argo-cd:
     replicas: 1
     resources:
       requests:
-        cpu: 50m
-        memory: 300M
+        cpu: 100m
+        memory: 500M
       limits:
-        memory: 300M
+        memory: 500M
 
   dex:
     enabled: false
@@ -39,19 +39,19 @@ argo-cd:
   redis:
     resources:
       requests:
-        cpu: 100m
-        memory: 128Mi
+        cpu: 50m
+        memory: 250Mi
       limits:
-        memory: 128Mi
+        memory: 250Mi
 
   server:
     replicas: 1
     resources:
       requests:
-        cpu: 20m
-        memory: 100M
+        cpu: 50m
+        memory: 150M
       limits:
-        memory: 100M
+        memory: 150M
     ingress:
       enabled: true
       ingressClassName: tailscale
@@ -65,7 +65,7 @@ argo-cd:
     replicas: 1
     resources:
       requests:
-        cpu: 20m
+        cpu: 50m
         memory: 150M
       limits:
         memory: 150M
@@ -74,7 +74,7 @@ argo-cd:
     replicas: 1
     resources:
       requests:
-        cpu: 25m
+        cpu: 50m
         memory: 100M
       limits:
         memory: 100M
@@ -83,7 +83,7 @@ argo-cd:
     replicas: 1
     resources:
       requests:
-        cpu: 25m
+        cpu: 50m
         memory: 100M
       limits:
         memory: 100M
