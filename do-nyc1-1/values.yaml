@@ -1,0 +1,81 @@
+cluster:
+  name: do-nyc1-1
+
+argo-cd:
+  configs:
+    cm:
+      accounts.ben: apiKey,login
+      accounts.ben.enabled: "true"
+      admin.enabled: "true"
+      applicationsetcontroller.enable.new.git.file.globbing: "true"
+      resource.customizations.ignoreDifferences.all: |
+        jqPathExpressions:
+        - .spec.template.spec.containers[].env[].valueFrom.resourceFieldRef.divisor
+        - .spec.template.spec.initContainers[].env[].valueFrom.resourceFieldRef.divisor
+      resource.exclusions: |
+        - apiGroups:
+          - "*"
+          kinds:
+          - "Endpoints"
+          - "ControllerRevision"
+          - "CiliumEndpoint"
+          - "CiliumIdentity"
+          - "EndpointSlice"
+          clusters:
+          - "*"
+
+  controller:
+    replicas: 1
+    resources:
+      requests:
+        cpu: 50m
+        memory: 300M
+      limits:
+        memory: 300M
+
+  dex:
+    enabled: false
+
+  redis:
+    resources:
+      requests:
+        cpu: 100m
+        memory: 128Mi
+      limits:
+        memory: 128Mi
+
+  server:
+    replicas: 1
+    resources:
+      requests:
+        cpu: 20m
+        memory: 100M
+      limits:
+        memory: 100M
+
+  repoServer:
+    replicas: 1
+    resources:
+      requests:
+        cpu: 20m
+        memory: 150M
+      limits:
+        memory: 150M
+
+  applicationSet:
+    replicas: 1
+    resources:
+      requests:
+        cpu: 25m
+        memory: 100M
+      limits:
+        memory: 100M
+
+  notifications:
+    replicas: 1
+    resources:
+      requests:
+        cpu: 25m
+        memory: 100M
+      limits:
+        memory: 100M

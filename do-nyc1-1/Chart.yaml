@@ -1,0 +1,9 @@
+apiVersion: v2
+name: argo-cd
+description: "A Helm that installs Argo CD and configures it"
+version: 0.1.0
+
+dependencies:
+  - name: argo-cd
+    version: ~7.7
+    repository: https://argoproj.github.io/argo-helm

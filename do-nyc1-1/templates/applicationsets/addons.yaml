@@ -1,8 +1,9 @@
+{{- if not .Values.bootstrap }}
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
   name: addons
-  namespace: argocd
+  namespace: {{ .Release.Namespace }}
 spec:
   goTemplate: true
   goTemplateOptions: [ "missingkey=error" ]
@@ -11,31 +12,30 @@ spec:
       repoURL: https://github.com/bcrisp4/kubernetes-config.git
       revision: HEAD
       directories:
-      - path: 'do-nyc3-prod-1/addons/*'
+      - path: {{ .Values.cluster.name }}/addons/*
   template:
     metadata:
-      name: '{{ normalize (index .path.segments 2) }}-prod'
+      name: '{{"{{"}} normalize (index .path.segments 2) {{"}}"}}-prod'
     spec:
       project: addons
       source:
         repoURL: https://github.com/bcrisp4/kubernetes-config.git
         targetRevision: HEAD
-        path: '{{ .path.path }}'
+        path: '{{"{{"}} .path.path {{"}}"}}'
         helm:
           valueFiles:
           - "values.yaml"
           - "overrides/values.yaml"
       destination:
-        name: "do-nyc3-prod-1"
-        namespace: '{{ normalize (index .path.segments 2) }}-prod'
+        name: {{ .Values.cluster.name }}
+        namespace: '{{"{{"}} normalize (index .path.segments 2) {{"}}"}}-prod'
       syncPolicy:
         managedNamespaceMetadata:
           labels:
-            bc4.uk/app: '{{ normalize (index .path.segments 2) }}'
-            bc4.uk/instance: '{{ normalize (index .path.segments 2) }}-prod'
+            bc4.uk/app: '{{"{{"}} normalize (index .path.segments 2) {{"}}"}}'
+            bc4.uk/instance: '{{"{{"}} normalize (index .path.segments 2) {{"}}"}}-prod'
             bc4.uk/project: addons
-            bc4.uk/environment: prod
-            bc4.uk/cluster: do-nyc3-prod-1
+            name: {{ .Values.cluster.name }}
             goldilocks.fairwinds.com/enabled: 'true'
         automated:
           prune: true
@@ -43,3 +43,4 @@ spec:
         syncOptions:
         - ServerSideApply=true
         - CreateNamespace=true
+{{- end }}
