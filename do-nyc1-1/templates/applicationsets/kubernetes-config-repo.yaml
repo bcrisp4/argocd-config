@@ -15,7 +15,7 @@ spec:
       - path: {{ .Values.cluster.name }}/*
   template:
     metadata:
-      name: '{{"{{"}} normalize (index .path.segments 2) {{"}}"}}'
+      name: '{{"{{"}} normalize (index .path.segments 1) {{"}}"}}'
     spec:
       project: default
       source:
@@ -28,12 +28,11 @@ spec:
           - "overrides/values.yaml"
       destination:
         name: {{ .Values.cluster.name }}
-        namespace: '{{"{{"}} normalize (index .path.segments 2) {{"}}"}}'
+        namespace: '{{"{{"}} normalize (index .path.segments 1) {{"}}"}}'
       syncPolicy:
         managedNamespaceMetadata:
           labels:
-            bc4.uk/app: '{{"{{"}} normalize (index .path.segments 2) {{"}}"}}'
-            bc4.uk/instance: '{{"{{"}} normalize (index .path.segments 2) {{"}}"}}'
+            bc4.uk/app: '{{"{{"}} normalize (index .path.segments 1) {{"}}"}}'
             bc4.uk/project: default
             name: {{ .Values.cluster.name }}
             goldilocks.fairwinds.com/enabled: 'true'
